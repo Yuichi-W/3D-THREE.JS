@@ -31,7 +31,7 @@ function App() {
     camera.position.set(-0.5, 0.4, 1); //犬アニメーション
 
     // renderer
-    const renderer: WebGLRenderer = new THREE.WebGLRenderer({
+    const renderer = new THREE.WebGLRenderer({
       canvas: canvas,
       antialias: true, //3Dのイラストの周りがギザギザになるのを防ぐ
       alpha: true,     //透明度のこと　背景に黒が当たっているので透明度をtrueにする
