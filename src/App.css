@@ -1,0 +1,31 @@
+canvas {
+    width: 100%;
+    height: 100vh;
+    background: rgb(2,0,36);
+    background: linear-gradient(
+        90deg, 
+        rgba(2,0,36,1) 0%, 
+        rgba(9,9,121,1) 7%, 
+        rgba(0,212,255,1) 100%
+    );
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.mainContent {
+    position: absolute;
+    top: 47%;
+    left: 16%;
+    transform: translate(-16%, -50%);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.mainContent h3 {
+    font-size: 5.0rem;
+    margin: 0;
+}
+
+.mainContent p {
+    font-size: 1.5rem;
+}
