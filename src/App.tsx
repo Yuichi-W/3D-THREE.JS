@@ -2,6 +2,7 @@ import './App.css'
 import * as THREE from "three";
 import { useEffect } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { WebGLRenderer } from 'three';
 
 function App() {
 
@@ -27,11 +28,11 @@ function App() {
       0.1,                       //near:手前の画面みたいなもの
       1000                       //far:最奥にある画面みたいなもの　nearとfarの間が視錐台
     );
-    // camera.position.set(-0.4, -0.1, 1); //柴犬
-    camera.position.set(-0.5, 0.4, 1); //犬アニメーション
+    // camera.position.set(0, 0, 1); //四角物体
+    camera.position.set(-0.4, -0.1, 1); //柴犬
 
     // renderer
-    const renderer = new THREE.WebGLRenderer({
+    const renderer: WebGLRenderer = new THREE.WebGLRenderer({
       canvas: canvas,
       antialias: true, //3Dのイラストの周りがギザギザになるのを防ぐ
       alpha: true,     //透明度のこと　背景に黒が当たっているので透明度をtrueにする
@@ -48,49 +49,27 @@ function App() {
 
     // 3dモデルのインポート
     const gltfLoader = new GLTFLoader();
-    // アニメーションさせるための変数の型指定
-    let mixer: THREE.AnimationMixer;
+    // // アニメーションさせるための変数の型指定
+    // let mixer: THREE.AnimationMixer;
 
-    gltfLoader.load("./public/models/animation.gltf", (gltf) => {
+    gltfLoader.load("./public/models/scene.gltf", (gltf) => {
       model = gltf.scene;
       // ３Dモデルの大きさ設定
-      // model.scale.set(0.5, 0.5, 0.5); //柴犬
-      model.scale.set(0.00007, 0.00007, 0.00007);    //犬アニメーション
+      model.scale.set(0.5, 0.5, 0.5); //柴犬
+      // model.scale.set(0.00007, 0.00007, 0.00007);    //犬アニメーション
       // 向きの設定　60度傾ける
       model.rotation.y = -Math.PI / 3;
       scene.add(model);
 
-      // アニメーションさせるための設定
-      mixer = new THREE.AnimationMixer(model);
-      const clips = gltf.animations;
-      // console.log(clips);
-      clips.forEach(function (clip) {
-        const action = mixer.clipAction(clip);
-        action.play();
-      });
     });
-
-    // ライト（犬アニメーションは初期ライトなしので真っ黒なので必要）
-    // 引数は明かりの色と明かりの大きさ
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-    scene.add(ambientLight);
-    const pointLight = new THREE.PointLight(0xffffff, 2, 100);
-    scene.add(pointLight);
-
 
     // アニメーション
     const tick = () => {
       renderer.render(scene, camera);
 
-      if(mixer) {
-        // どれだけの秒数でアニメーションさせるのかを入れる
-        mixer.update(0.01);
-      }
-
       requestAnimationFrame(tick);
     };
     tick();
-
   },[]);
 
   return (
